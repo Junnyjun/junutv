@@ -16,19 +16,19 @@ interface VideoPart {
         private val minioClient: MinioClient,
     ) : VideoPart {
 
-        override fun get(videoPart: GetVideoRequest): InputStream = minioClient.getObject(
-            GetObjectArgs.builder()
+        override fun get(videoPart: GetVideoRequest): InputStream = minioClient.getObject(params(videoPart))
+
+        private fun params(videoPart: GetVideoRequest): GetObjectArgs = GetObjectArgs.builder()
                 .bucket("junu-tv")
                 .`object`(videoPart.videoName)
                 .offset(videoPart.startRange)
-                .length(chunkSize)
+                .length(chunkSize.coerceAtMost(videoPart.endRange - videoPart.startRange))
                 .build()
-        )
     }
 
     data class GetVideoRequest(
         val videoName: String,
-        val videoLength: Long,
         val startRange: Long,
+        val endRange: Long
     )
 }
