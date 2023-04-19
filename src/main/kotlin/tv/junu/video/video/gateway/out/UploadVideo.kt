@@ -13,7 +13,9 @@ interface UploadVideo {
     class UploadMinIoGateway(
         private val minioClient: MinioClient,
     ) : UploadVideo {
-        override fun upload(video: VideoRequest) = minioClient.putObject(
+        override fun upload(video: VideoRequest) = minioClient.putObject(params(video))
+
+        private fun params(video: VideoRequest): PutObjectArgs =
             PutObjectArgs.builder()
                 .bucket("junu-tv")
                 .`object`(video.name)
@@ -21,7 +23,6 @@ interface UploadVideo {
                 .tags(mapOf("category" to video.tag))
                 .stream(video.file.inputStream(), video.file.length(), -1)
                 .build()
-        )
     }
 
     data class VideoRequest(
