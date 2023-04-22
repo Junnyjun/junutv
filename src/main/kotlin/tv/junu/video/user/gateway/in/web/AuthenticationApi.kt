@@ -43,11 +43,11 @@ sealed interface AuthenticationApi {
                 .switchIfEmpty(Mono.error(PasswordNotMatchException()))
 
         @PostMapping("/api/v1/regist")
-        override fun signin(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository
-            .save(authRequest.toEntity)
-            .map { tokenCreate.createToken(TokenCreateRequest(it.id, it.role)) }
-            .map { ResponseEntity.ok(AuthResponse(it)) }
-            .switchIfEmpty(Mono.error(PasswordNotMatchException()))
+        override fun signin(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
+            userRepository.save(authRequest.toEntity)
+                .map { tokenCreate.createToken(TokenCreateRequest(it.id, it.role)) }
+                .map { ResponseEntity.ok(AuthResponse(it)) }
+                .switchIfEmpty(Mono.error(PasswordNotMatchException()))
 
     }
 
