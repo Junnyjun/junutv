@@ -18,8 +18,8 @@ interface UserRepository {
     ) : UserRepository {
         override fun findByEmail(email: String): Mono<UserEntity> =
                 userMongoDBRepository.findByEmail(email)
-                    ?.map { it.toDomain }
-                    ?: Mono.error(UserNotFoundException())
+                    .map { it }
+                    .switchIfEmpty(Mono.error(UserNotFoundException()))
 
         override fun save(userEntity: UserEntity): Mono<UserEntity> = userMongoDBRepository.save(userEntity)
     }

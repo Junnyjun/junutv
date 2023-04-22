@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono
 
 @Component
 interface UserMongoDBRepository: ReactiveMongoRepository<UserEntity, Long> {
-    fun findByEmail(email: String): Mono<UserEntity>?
+    fun findByEmail(email: String): Mono<UserEntity>
 }
