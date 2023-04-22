@@ -8,3 +8,11 @@ spring:
       auto-index-creation: true
       authentication-database: admin
       database: junutv
+  main:
+    web-application-type: reactive
+
+jwt:
+  token:
+    private: classpath:app.key
+    public: classpath:app.pub
+    time: 1800000
