@@ -1,4 +1,4 @@
-package tv.junu.video.config
+package tv.junu.video.global
 
 import com.mongodb.reactivestreams.client.MongoClient
 import org.springframework.context.annotation.Bean
