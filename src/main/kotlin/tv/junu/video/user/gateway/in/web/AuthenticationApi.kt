@@ -28,7 +28,7 @@ sealed interface AuthenticationApi {
     ) : AuthenticationApi {
         @PostMapping("/api/v1/login")
         override fun login(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
-            findUser.ByEmail(authRequest.email)
+            findUser.byEmail(authRequest.email)
                 .filter { passwordEncoder.matches(authRequest.password, it.password) }
                 .map { tokenCreate.createToken(TokenCreateRequest(it.id, it.role)) }
                 .map { ResponseEntity.ok(AuthResponse(it)) }
@@ -36,7 +36,7 @@ sealed interface AuthenticationApi {
 
         @PostMapping("/api/v1/signup")
         override fun signup(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
-            findUser.ByEmail(authRequest.email)
+            findUser.byEmail(authRequest.email)
                 .filter { passwordEncoder.matches(authRequest.password, it.password) }
                 .map { tokenCreate.createToken(TokenCreateRequest(it.id, it.role)) }
                 .map { ResponseEntity.ok(AuthResponse(it)) }
