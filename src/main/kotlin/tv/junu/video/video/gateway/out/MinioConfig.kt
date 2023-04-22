@@ -12,12 +12,12 @@ class MinioConfig {
     @Profile("live")
     fun live(): MinioClient = MinioClient.builder()
         .endpoint("http://main.junnyland.com:9000/")
-        .credentials("K1VCwb9CEBN3ueQ8", "jAJmrkrL06UfdkStaEC3ZZC3u9tCG2w9")
+        .credentials("ng5Wr3xB8xxiZof6", "Kk4gICTFaxj5pifU4uUsA1paHlsPjX1f")
         .build()
 
     @Bean
     fun dev(): MinioClient = MinioClient.builder()
         .endpoint("http://main.junnyland.com:9000/")
-        .credentials("K1VCwb9CEBN3ueQ8", "jAJmrkrL06UfdkStaEC3ZZC3u9tCG2w9")
+        .credentials("ng5Wr3xB8xxiZof6", "Kk4gICTFaxj5pifU4uUsA1paHlsPjX1f")
         .build()
 }
