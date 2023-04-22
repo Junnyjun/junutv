@@ -14,46 +14,52 @@ import tv.junu.video.user.exception.PasswordNotMatchException
 import tv.junu.video.user.gateway.out.repository.UserRepository
 import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
 
-@RestController
-class AuthenticationApi(
-    private val tokenCreate: TokenCreate,
-    private val passwordEncoder: PasswordEncoder,
-    private val findUser: FindUser,
-    private val userRepository: UserRepository
-) {
-    @PostMapping("/api/v1/login")
-    fun customLogin(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
-        findUser.ByEmail(authRequest.email)
-            .filter { passwordEncoder.matches(authRequest.password, it.password) }
-            .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
-            .switchIfEmpty(Mono.error(PasswordNotMatchException()))
+sealed interface AuthenticationApi{
+    fun login(authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>>
+    fun signup(authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>>
+    fun signin(authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>>
 
-    @PostMapping("/api/v1/signup")
-    fun customSignup(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
-        findUser.ByEmail(authRequest.email)
-            .filter { passwordEncoder.matches(authRequest.password, it.password) }
-            .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
+    @RestController
+    class AuthenticationWepApi(
+        private val tokenCreate: TokenCreate,
+        private val passwordEncoder: PasswordEncoder,
+        private val findUser: FindUser,
+        private val userRepository: UserRepository
+    ):AuthenticationApi {
+        @PostMapping("/api/v1/login")
+        override fun login(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
+            findUser.ByEmail(authRequest.email)
+                .filter { passwordEncoder.matches(authRequest.password, it.password) }
+                .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
+                .switchIfEmpty(Mono.error(PasswordNotMatchException()))
 
-    @PostMapping("/api/v1/regist")
-    fun customRegist(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository
-        .save(authRequest.toEntity)
-        .map {tokenCreate.createToken(TokenCreateRequest(it.id, it.role))}
-        .map { ResponseEntity.ok(AuthResponse(it)) }
+        @PostMapping("/api/v1/signup")
+        override fun signup(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> =
+            findUser.ByEmail(authRequest.email)
+                .filter { passwordEncoder.matches(authRequest.password, it.password) }
+                .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
 
-}
+        @PostMapping("/api/v1/regist")
+        override fun signin(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository
+            .save(authRequest.toEntity)
+            .map {tokenCreate.createToken(TokenCreateRequest(it.id, it.role))}
+            .map { ResponseEntity.ok(AuthResponse(it)) }
 
-data class AuthResponse(
-    val token: String
-)
+    }
 
-data class AuthRequest(
-    val name: String,
-    val email: String,
-    val password: String
-){
-    val toEntity get() = UserEntity(
-        name = name,
-        email = email,
-        password = password
+    data class AuthResponse(
+        val token: String
     )
+
+    data class AuthRequest(
+        val name: String,
+        val email: String,
+        val password: String
+    ){
+        val toEntity get() = UserEntity(
+            name = name,
+            email = email,
+            password = password
+        )
+    }
 }
