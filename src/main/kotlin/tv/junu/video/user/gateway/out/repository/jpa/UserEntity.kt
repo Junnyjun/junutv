@@ -1,4 +1,4 @@
-package tv.junu.video.user.gateway.out.jpa
+package tv.junu.video.user.gateway.out.repository.jpa
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
@@ -14,9 +14,17 @@ class UserEntity(
     @Id val id: ObjectId = ObjectId.get(),
     @Indexed(unique = true) val email: String,
     val password: String,
-    val name: String,
-    val role: Role,
+    val name: String ,
+    val role: Role = ROLE_USER,
     @Indexed(direction = IndexDirection.DESCENDING) private val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
-    constructor(email: String, password: String) : this(email = email, password = password, name = "mangjoo", role = ROLE_USER)
+    val toDomain : User
+        get() = User(
+            id = this.id,
+            email = this.email,
+            password = this.password,
+            name = this.name,
+            role = this.role,
+            createdAt = this.createdAt
+        )
 }

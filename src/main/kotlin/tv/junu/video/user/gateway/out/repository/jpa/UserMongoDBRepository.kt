@@ -1,4 +1,4 @@
-package tv.junu.video.user.gateway.out.jpa
+package tv.junu.video.user.gateway.out.repository.jpa
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Component

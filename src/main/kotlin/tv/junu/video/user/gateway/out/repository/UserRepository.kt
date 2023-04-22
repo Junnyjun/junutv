@@ -1,10 +1,10 @@
-package tv.junu.video.user.gateway.out
+package tv.junu.video.user.gateway.out.repository
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
-import tv.junu.video.user.gateway.out.jpa.UserEntity
-import tv.junu.video.user.gateway.out.jpa.UserMongoDBRepository
+import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
+import tv.junu.video.user.gateway.out.repository.jpa.UserMongoDBRepository
 import tv.junu.video.user.gateway.`in`.web.exception.UserNotFoundException
 
 interface UserRepository {
@@ -18,7 +18,7 @@ interface UserRepository {
     ) : UserRepository {
         override fun findByEmail(email: String): Mono<UserEntity> =
                 userMongoDBRepository.findByEmail(email)
-                    .map { it }
+                    .map { it.toDomain }
                     .switchIfEmpty(Mono.error(UserNotFoundException()))
 
         override fun save(userEntity: UserEntity): Mono<UserEntity> = userMongoDBRepository.save(userEntity)
