@@ -1,4 +1,4 @@
-package tv.junu.video.global
+package tv.junu.video.user.gateway.`in`
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
