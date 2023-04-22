@@ -1,6 +1,7 @@
 package tv.junu.video.video.gateway.out.file
 
 import org.junit.jupiter.api.Test
+import tv.junu.video.video.gateway.out.MinioConfig
 import java.nio.file.Path
 
 class UploadVideoTest{

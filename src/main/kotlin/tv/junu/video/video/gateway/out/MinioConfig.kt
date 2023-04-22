@@ -1,4 +1,4 @@
-package tv.junu.video.video.gateway.out.file
+package tv.junu.video.video.gateway.out
 
 import io.minio.MinioClient
 import org.springframework.context.annotation.Bean

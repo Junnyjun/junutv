@@ -2,6 +2,7 @@ package tv.junu.video.video.gateway.out.file
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import tv.junu.video.video.gateway.out.MinioConfig
 import tv.junu.video.video.gateway.out.file.VideoPart.GetVideoRequest
 import java.io.File
 import java.io.FileOutputStream
