@@ -1,4 +1,4 @@
-package tv.junu.video.user.application.config
+package tv.junu.video.user.gateway.`in`.web
 
 import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey.Builder

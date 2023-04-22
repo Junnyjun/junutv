@@ -1,4 +1,4 @@
-package tv.junu.video.user.domain.jwt
+package tv.junu.video.user
 
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Value
@@ -6,13 +6,13 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Component
-import tv.junu.video.user.application.repository.Role
+import tv.junu.video.user.domain.Role
 import java.nio.charset.StandardCharsets.*
 import java.time.Instant
 
 
 @Component
-class JwtCreate(
+class TokenCreate(
         private val jwtEncoder: JwtEncoder,
         @Value("\${jwt.token.time}")
         private val time: Long,

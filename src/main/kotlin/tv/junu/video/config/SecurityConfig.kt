@@ -1,4 +1,4 @@
-package tv.junu.video.user.application.config
+package tv.junu.video.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
