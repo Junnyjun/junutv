@@ -1,4 +1,4 @@
-package tv.junu.video.video.gateway.out
+package tv.junu.video.video.gateway.out.file
 
 import io.minio.MinioClient
 import io.minio.RemoveObjectArgs
