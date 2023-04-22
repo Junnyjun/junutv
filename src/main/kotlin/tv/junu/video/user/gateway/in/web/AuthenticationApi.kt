@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import tv.junu.video.user.TokenCreate
+import tv.junu.video.user.TokenCreate.TokenCreateRequest
 import tv.junu.video.user.UserDetailsService
 import tv.junu.video.user.domain.Role.*
 import tv.junu.video.user.gateway.`in`.web.exception.PasswordNotMatchException
@@ -36,7 +37,7 @@ class AuthenticationApi(
     @PostMapping("/api/v1/regist")
     fun customRegist(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository
         .save(authRequest.toEntity)
-        .map {tokenCreate.createToken(it.id, it.role)}
+        .map {tokenCreate.createToken(TokenCreateRequest(it.id, it.role))}
         .map { ResponseEntity.ok(AuthResponse(it)) }
 
 }
