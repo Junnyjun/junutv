@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono
 import tv.junu.video.user.exception.UserNotFoundException
 
 @RestControllerAdvice
-class AuthenticationExceptionHandler {
+class AuthenticationFailController {
 
     @ExceptionHandler(UserNotFoundException::class)
     fun handleUserNotFoundException(): Mono<ResponseEntity<String>> =
