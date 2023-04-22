@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
 import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
 import tv.junu.video.user.gateway.out.repository.jpa.UserMongoDBRepository
-import tv.junu.video.user.gateway.`in`.web.exception.UserNotFoundException
+import tv.junu.video.user.exception.UserNotFoundException
 
 interface UserRepository {
     fun findByEmail(email: String): Mono<UserEntity>

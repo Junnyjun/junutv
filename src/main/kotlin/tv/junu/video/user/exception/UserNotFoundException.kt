@@ -1,4 +1,4 @@
-package tv.junu.video.user.gateway.`in`.web.exception
+package tv.junu.video.user.exception
 
 class UserNotFoundException(
         msg: String = "User not found"

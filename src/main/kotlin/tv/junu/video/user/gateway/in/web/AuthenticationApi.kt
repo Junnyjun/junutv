@@ -10,7 +10,7 @@ import tv.junu.video.user.TokenCreate
 import tv.junu.video.user.TokenCreate.TokenCreateRequest
 import tv.junu.video.user.UserDetailsService
 import tv.junu.video.user.domain.Role.*
-import tv.junu.video.user.gateway.`in`.web.exception.PasswordNotMatchException
+import tv.junu.video.user.exception.PasswordNotMatchException
 import tv.junu.video.user.gateway.out.repository.UserRepository
 import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
 

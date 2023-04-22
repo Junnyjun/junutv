@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import reactor.core.publisher.Mono
-import tv.junu.video.user.gateway.`in`.web.exception.UserNotFoundException
+import tv.junu.video.user.exception.UserNotFoundException
 
 @RestControllerAdvice
 class AuthenticationExceptionHandler {

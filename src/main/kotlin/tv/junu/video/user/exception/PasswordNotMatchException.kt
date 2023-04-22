@@ -1,4 +1,4 @@
-package tv.junu.video.user.gateway.`in`.web.exception
+package tv.junu.video.user.exception
 
 import org.springframework.security.core.AuthenticationException
 
