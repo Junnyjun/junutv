@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import tv.junu.video.user.domain.Role
 import tv.junu.video.user.domain.Role.ROLE_USER
+import tv.junu.video.user.domain.User
 import java.time.LocalDateTime
 
 @Document(collection = "user")
@@ -25,6 +26,5 @@ class UserEntity(
             password = this.password,
             name = this.name,
             role = this.role,
-            createdAt = this.createdAt
         )
 }
