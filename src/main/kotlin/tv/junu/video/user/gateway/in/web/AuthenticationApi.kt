@@ -34,14 +34,10 @@ class AuthenticationApi(
             .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
 
     @PostMapping("/api/v1/regist")
-    fun customRegist(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository.save(
-        UserEntity(
-            name = authRequest.name,
-            email = authRequest.email,
-            password = passwordEncoder.encode(authRequest.password),
-        )
-    )
-        .map { ResponseEntity.ok(AuthResponse(tokenCreate.createToken(it.id, it.role))) }
+    fun customRegist(@RequestBody authRequest: AuthRequest): Mono<ResponseEntity<AuthResponse>> = userRepository
+        .save(authRequest.toEntity)
+        .map {tokenCreate.createToken(it.id, it.role)}
+        .map { ResponseEntity.ok(AuthResponse(it)) }
 
 }
 
@@ -53,4 +49,10 @@ data class AuthRequest(
     val name: String,
     val email: String,
     val password: String
-)
+){
+    val toEntity get() = UserEntity(
+        name = name,
+        email = email,
+        password = password
+    )
+}
