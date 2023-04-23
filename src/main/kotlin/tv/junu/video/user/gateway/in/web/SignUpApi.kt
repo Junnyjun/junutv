@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import tv.junu.video.user.SignUpUser
-import tv.junu.video.user.exception.PasswordNotMatchException
-import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
+import tv.junu.video.user.domain.User
 
 sealed interface SignUpApi {
     fun signUp(request: SignUpRequest): ResponseEntity<Mono<ObjectId>>
@@ -21,8 +20,8 @@ sealed interface SignUpApi {
         @PostMapping("/api/v1/signup")
         override fun signUp(@RequestBody request: SignUpRequest): ResponseEntity<Mono<ObjectId>> = ResponseEntity.ok(
             takeIf { request.isPasswordConfirm }
-                ?.let { signUpUser.signUp(request.toEntity) }
-                ?:signUpUser.signUp(request.toEntity)
+                ?.let { signUpUser.signUp(request.toDomain) }
+                ?: signUpUser.signUp(request.toDomain)
         )
 
     }
@@ -37,8 +36,8 @@ sealed interface SignUpApi {
         val isPasswordConfirm
             get() = password == passwordConfirm
 
-        val toEntity
-            get() = UserEntity(
+        val toDomain
+            get() = User(
                 email = email,
                 password = password,
                 name = name

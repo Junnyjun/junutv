@@ -10,7 +10,7 @@ import tv.junu.video.user.gateway.out.repository.jpa.UserMongoDBRepository
 
 interface UserRepository {
     fun findByEmail(email: String): Mono<User>
-    fun save(userEntity: UserEntity): Mono<User>
+    fun save(user: User): Mono<User>
 
     @Component
     @Transactional
@@ -22,8 +22,8 @@ interface UserRepository {
                 .map { it.toDomain }
                 .switchIfEmpty(Mono.error(UserNotFoundException()))
 
-        override fun save(userEntity: UserEntity): Mono<User> =
-            userMongoDBRepository.save(userEntity)
+        override fun save(user: User): Mono<User> =
+            userMongoDBRepository.save(UserEntity.fromDomain(user))
                 .map { it.toDomain }
     }
 }

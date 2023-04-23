@@ -9,6 +9,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 import reactor.core.publisher.Mono
+import tv.junu.video.user.domain.User
 import tv.junu.video.user.exception.UserException
 import tv.junu.video.user.gateway.out.repository.UserRepository
 import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
@@ -24,31 +25,31 @@ class SignUpUserTest {
 
     @Test
     fun `sign up user`() {
-        val userEntity = UserEntity(
+        val user = User(
             email = "mangjoo@gmail.com",
             password = "1234",
             name = "mangjoo",
         )
-        `when`(userRepository.save(userEntity))
-            .thenReturn(Mono.just(userEntity.toDomain))
+        `when`(userRepository.save(user))
+            .thenReturn(Mono.just(user))
 
-        signUpUser.signUp(userEntity)
+        signUpUser.signUp(user)
             .subscribe {
-                assertEquals(it, userEntity.toDomain.id)
+                assertEquals(it, user.id)
             }
     }
 
     @Test
     fun `sign up user unique exception test`() {
-        val userEntity = UserEntity(
+        val user = User(
             email = "mangjoo@gmail.com",
             password = "1234",
             name = "mangjoo",
         )
-        `when`(userRepository.save(userEntity))
+        `when`(userRepository.save(user))
             .thenThrow(UserException("User already exists"))
 
-        assertThatThrownBy { signUpUser.signUp(userEntity) }
+        assertThatThrownBy { signUpUser.signUp(user) }
             .isInstanceOf(UserException::class.java)
             .hasMessage("User already exists")
 
