@@ -19,11 +19,12 @@ interface VideoPart {
         override fun get(videoPart: GetVideoRequest): InputStream = minioClient.getObject(params(videoPart))
 
         private fun params(videoPart: GetVideoRequest): GetObjectArgs = GetObjectArgs.builder()
-                .bucket("junu-tv")
-                .`object`(videoPart.videoName)
-                .offset(videoPart.startRange)
-                .length(chunkSize.coerceAtMost(videoPart.endRange - videoPart.startRange))
-                .build()
+            .bucket("junu-tv")
+            .`object`(videoPart.videoName)
+            .extraHeaders(mapOf("content-type" to "video/mp4"))
+            .offset(videoPart.startRange)
+            .length(chunkSize.coerceAtMost(videoPart.endRange - videoPart.startRange))
+            .build()
     }
 
     data class GetVideoRequest(

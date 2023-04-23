@@ -9,14 +9,14 @@ import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
 
 interface SignUpUser {
 
-    fun signUp(userEntity: UserEntity): Mono<ObjectId>
+    fun signUp(user: User): Mono<ObjectId>
 
     @Service
     class SignUpUserImpl(
         private val userRepository: UserRepository,
     ) : SignUpUser {
-        override fun signUp(userEntity: UserEntity): Mono<ObjectId> =
-            userRepository.save(userEntity)
+        override fun signUp(user: User): Mono<ObjectId> =
+            userRepository.save(user)
                 .map { it.id }
                 .switchIfEmpty(Mono.error(UserException("User already exists")))
     }
