@@ -6,7 +6,6 @@ import reactor.core.publisher.Mono
 import tv.junu.video.user.domain.User
 import tv.junu.video.user.exception.UserException
 import tv.junu.video.user.gateway.out.repository.UserRepository
-import tv.junu.video.user.gateway.out.repository.jpa.UserEntity
 
 interface SignUpUser {
 
