@@ -20,10 +20,9 @@ sealed interface SignUpApi {
 
         @PostMapping("/api/v1/signup")
         override fun signUp(@RequestBody request: SignUpRequest): ResponseEntity<Mono<ObjectId>> = ResponseEntity.ok(
-            when {
-                request.isPasswordConfirm -> Mono.error(PasswordNotMatchException("Password not match"))
-                else -> signUpUser.signUp(request.toEntity)
-            }
+            takeIf { request.isPasswordConfirm }
+                ?.let { signUpUser.signUp(request.toEntity) }
+                ?:signUpUser.signUp(request.toEntity)
         )
 
     }
