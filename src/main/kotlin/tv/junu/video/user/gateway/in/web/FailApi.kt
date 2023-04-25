@@ -9,7 +9,7 @@ import tv.junu.video.user.exception.UserException
 import tv.junu.video.user.exception.UserNotFoundException
 
 @RestControllerAdvice
-class AuthenticationFailApi {
+class FailApi {
 
     @ExceptionHandler(UserNotFoundException::class)
     fun handleUserNotFoundException(): Mono<ResponseEntity<String>> =
